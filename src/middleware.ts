@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 // Demo үед админ хуудсыг нээлттэй болгох (DB байхгүй учир).
 // Production-д энэ хувьсагчийг "false" болгоод бодит auth-аар хамгаална.
-const DEMO_MODE = true;
+const DEMO_MODE = false;
 
 export default withAuth(
   function middleware(req) {
