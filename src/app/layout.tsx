@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
@@ -73,6 +74,7 @@ export default function RootLayout({
             <Footer />
             <CartDrawer />
             <ToastProvider />
+            <Analytics />
           </AuthProvider>
         </ThemeProvider>
       </body>
