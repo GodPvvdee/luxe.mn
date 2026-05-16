@@ -4,24 +4,28 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { products } from "@/lib/mock-data";
+import { getAllProducts } from "@/lib/products";
 import { formatPrice } from "@/lib/utils";
 
-export default function AdminProductsPage() {
+// Always read fresh data — DB edits in Neon Console appear immediately.
+export const dynamic = "force-dynamic";
+
+export default async function AdminProductsPage() {
+  const products = await getAllProducts();
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="font-display text-3xl tracking-tight">Products</h1>
+          <h1 className="font-display text-3xl tracking-tight">Бүтээгдэхүүн</h1>
           <p className="text-muted-foreground mt-1">
-            {products.length} products · manage inventory and pricing.
+            {products.length} бүтээгдэхүүн · нөөц, үнээ удирдана.
           </p>
         </div>
         <div className="flex gap-2">
-          <Input placeholder="Search products…" className="max-w-xs" />
+          <Input placeholder="Бүтээгдэхүүн хайх…" className="max-w-xs" />
           <Button>
             <Plus className="h-4 w-4" />
-            New product
+            Шинэ бүтээгдэхүүн
           </Button>
         </div>
       </div>
@@ -31,11 +35,11 @@ export default function AdminProductsPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b text-xs text-muted-foreground">
-                <th className="text-left font-medium px-6 py-3">Product</th>
-                <th className="text-left font-medium py-3">Category</th>
-                <th className="text-left font-medium py-3">Status</th>
-                <th className="text-right font-medium py-3">Price</th>
-                <th className="text-right font-medium py-3">Stock</th>
+                <th className="text-left font-medium px-6 py-3">Бүтээгдэхүүн</th>
+                <th className="text-left font-medium py-3">Ангилал</th>
+                <th className="text-left font-medium py-3">Төлөв</th>
+                <th className="text-right font-medium py-3">Үнэ</th>
+                <th className="text-right font-medium py-3">Нөөц</th>
                 <th className="text-right font-medium px-6 py-3"></th>
               </tr>
             </thead>
@@ -45,7 +49,9 @@ export default function AdminProductsPage() {
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-3">
                       <div className="relative h-10 w-10 rounded-lg overflow-hidden bg-muted shrink-0">
-                        <Image src={p.images[0]} alt={p.name} fill sizes="40px" className="object-cover" />
+                        {p.images[0] && (
+                          <Image src={p.images[0]} alt={p.name} fill sizes="40px" className="object-cover" />
+                        )}
                       </div>
                       <div className="min-w-0">
                         <div className="font-medium line-clamp-1">{p.name}</div>
@@ -56,9 +62,9 @@ export default function AdminProductsPage() {
                   <td className="py-3">{p.categoryName}</td>
                   <td className="py-3">
                     {p.stock > 0 ? (
-                      <Badge variant="new">In stock</Badge>
+                      <Badge variant="new">Нөөцтэй</Badge>
                     ) : (
-                      <Badge variant="destructive">Out of stock</Badge>
+                      <Badge variant="destructive">Дууссан</Badge>
                     )}
                   </td>
                   <td className="py-3 text-right tabular-nums font-medium">

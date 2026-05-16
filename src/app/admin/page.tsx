@@ -5,32 +5,35 @@ import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/admin/stat-card";
 import { RevenueChart } from "@/components/admin/revenue-chart";
 import { CategoryChart } from "@/components/admin/category-chart";
-import { products } from "@/lib/mock-data";
+import { getAllProducts } from "@/lib/products";
 import { formatPrice } from "@/lib/utils";
 
-export default function AdminPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminPage() {
+  const products = await getAllProducts();
   const top = products.filter((p) => p.bestseller).slice(0, 5);
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl tracking-tight">Welcome back, Admin</h1>
+        <h1 className="font-display text-3xl tracking-tight">Тавтай морил, Админ</h1>
         <p className="text-muted-foreground mt-1">
-          Here&apos;s what&apos;s happening with your store today.
+          Танай дэлгүүрт өнөөдөр юу болж байгааг харна уу.
         </p>
       </div>
 
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        <StatCard label="Revenue" value="$72,485" delta="+12.4%" icon={DollarSign} />
-        <StatCard label="Orders" value="932" delta="+8.1%" icon={ShoppingCart} />
-        <StatCard label="Customers" value="2,481" delta="+5.2%" icon={Users} />
-        <StatCard label="Avg. order" value="$77.78" delta="-2.1%" positive={false} icon={Package} />
+        <StatCard label="Орлого" value="72,485,000 ₮" delta="+12.4%" icon={DollarSign} />
+        <StatCard label="Захиалга" value="932" delta="+8.1%" icon={ShoppingCart} />
+        <StatCard label="Хэрэглэгч" value="2,481" delta="+5.2%" icon={Users} />
+        <StatCard label="Дундаж захиалга" value="77,780 ₮" delta="-2.1%" positive={false} icon={Package} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4">
         <Card className="lg:col-span-2">
           <CardHeader className="flex-row items-start justify-between">
-            <CardTitle>Revenue</CardTitle>
-            <Badge variant="outline">Last 12 months</Badge>
+            <CardTitle>Орлого</CardTitle>
+            <Badge variant="outline">Сүүлийн 12 сар</Badge>
           </CardHeader>
           <CardContent className="pl-2">
             <RevenueChart />
@@ -38,7 +41,7 @@ export default function AdminPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Sales by category</CardTitle>
+            <CardTitle>Ангиллаар борлуулалт</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
             <CategoryChart />
@@ -49,20 +52,22 @@ export default function AdminPage() {
       <div className="grid lg:grid-cols-2 gap-4">
         <Card>
           <CardHeader className="flex-row items-center justify-between">
-            <CardTitle>Top products</CardTitle>
-            <span className="text-xs text-muted-foreground">By revenue</span>
+            <CardTitle>Шилдэг бүтээгдэхүүн</CardTitle>
+            <span className="text-xs text-muted-foreground">Орлогоор</span>
           </CardHeader>
           <CardContent className="space-y-3">
             {top.map((p) => (
               <div key={p.id} className="flex items-center gap-4">
                 <div className="relative h-12 w-12 rounded-xl overflow-hidden bg-muted">
-                  <Image src={p.images[0]} alt={p.name} fill sizes="48px" className="object-cover" />
+                  {p.images[0] && (
+                    <Image src={p.images[0]} alt={p.name} fill sizes="48px" className="object-cover" />
+                  )}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm line-clamp-1">{p.name}</div>
                   <div className="text-xs text-muted-foreground flex items-center gap-1">
                     <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                    {p.rating} · {p.reviewCount} reviews
+                    {p.rating} · {p.reviewCount} сэтгэгдэл
                   </div>
                 </div>
                 <div className="text-sm font-medium tabular-nums">
@@ -75,25 +80,25 @@ export default function AdminPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent orders</CardTitle>
+            <CardTitle>Сүүлийн захиалгууд</CardTitle>
           </CardHeader>
           <CardContent className="-mx-6">
             <table className="w-full text-sm">
               <thead className="text-xs text-muted-foreground">
                 <tr className="border-b">
-                  <th className="text-left font-medium px-6 py-2">Order</th>
-                  <th className="text-left font-medium py-2">Customer</th>
-                  <th className="text-left font-medium py-2">Status</th>
-                  <th className="text-right font-medium px-6 py-2">Total</th>
+                  <th className="text-left font-medium px-6 py-2">Захиалга</th>
+                  <th className="text-left font-medium py-2">Хэрэглэгч</th>
+                  <th className="text-left font-medium py-2">Төлөв</th>
+                  <th className="text-right font-medium px-6 py-2">Нийт</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  ["LUX-2451", "Emma S.", "Paid", 289],
-                  ["LUX-2450", "James K.", "Shipped", 519],
-                  ["LUX-2449", "Aiko T.", "Delivered", 145],
-                  ["LUX-2448", "Marcus C.", "Pending", 78],
-                  ["LUX-2447", "Olivia R.", "Paid", 412],
+                  ["LUX-2451", "Эмма С.", "Төлөгдсөн", 289],
+                  ["LUX-2450", "Жэймс К.", "Илгээгдсэн", 519],
+                  ["LUX-2449", "Айко Т.", "Хүргэгдсэн", 145],
+                  ["LUX-2448", "Маркус Ч.", "Хүлээгдэж буй", 78],
+                  ["LUX-2447", "Оливия Р.", "Төлөгдсөн", 412],
                 ].map(([id, customer, status, total]) => (
                   <tr key={id as string} className="border-b last:border-0">
                     <td className="px-6 py-3 font-mono text-xs">{id}</td>
@@ -101,9 +106,9 @@ export default function AdminPage() {
                     <td className="py-3">
                       <Badge
                         variant={
-                          status === "Delivered"
+                          status === "Хүргэгдсэн"
                             ? "new"
-                            : status === "Pending"
+                            : status === "Хүлээгдэж буй"
                               ? "outline"
                               : "default"
                         }
