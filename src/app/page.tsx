@@ -9,6 +9,8 @@ import { Newsletter } from "@/components/home/newsletter";
 import { getAllProducts, getCategories } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 export default async function HomePage() {
   const [products, categoryRows] = await Promise.all([

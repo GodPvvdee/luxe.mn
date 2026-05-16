@@ -8,6 +8,8 @@ import { ProductCardSkeleton } from "@/components/product/product-card-skeleton"
 import { getAllProducts, getCategories } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 export const metadata: Metadata = {
   title: "Бүх бүтээгдэхүүн",

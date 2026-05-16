@@ -10,6 +10,8 @@ import { TrackRecent } from "@/components/product/track-recent";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 type Params = { params: Promise<{ slug: string }> };
 
