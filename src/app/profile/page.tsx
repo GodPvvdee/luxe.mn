@@ -29,7 +29,7 @@ export default function ProfilePage() {
               <AvatarFallback>БЭ</AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <h2 className="font-display text-2xl">Бат-Эрдэнэ Дорж</h2>
+              <h2 className="font-display text-2xl">Чагнаадорж Пүрэв-Эрдэнэ</h2>
               <p className="text-sm text-muted-foreground">
                 bat@example.com · 2024 оны 3-р сараас гишүүн
               </p>
@@ -44,7 +44,7 @@ export default function ProfilePage() {
             <CardContent className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
                 <Label>Нэр</Label>
-                <Input defaultValue="Бат-Эрдэнэ" />
+                <Input defaultValue="Чагнаадорж" />
               </div>
               <div className="space-y-1.5">
                 <Label>Овог</Label>

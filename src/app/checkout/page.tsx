@@ -101,7 +101,7 @@ export default function CheckoutPage() {
               label="Бүтэн нэр"
               error={errors.name?.message}
               {...register("name")}
-              placeholder="Бат-Эрдэнэ Дорж"
+              placeholder="Чагнаадорж пүрэв-эрдэнэ"
             />
             <Field
               label="Хаягийн мөр 1"
