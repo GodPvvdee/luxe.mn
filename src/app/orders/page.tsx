@@ -7,11 +7,25 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { AccountNav } from "@/components/account/account-nav";
 import { formatPrice, formatDate } from "@/lib/utils";
 
-const orders = [
+type OrderItem = {
+  name: string;
+  size?: string;
+  color?: string;
+  image: string;
+};
+
+const orders: Array<{
+  id: string;
+  status: string;
+  statusVariant: "new" | "default" | "destructive";
+  date: Date;
+  total: number;
+  items: OrderItem[];
+}> = [
   {
     id: "LUX-2451092",
     status: "Хүргэгдсэн",
-    statusVariant: "new" as const,
+    statusVariant: "new",
     date: new Date("2026-05-04"),
     total: 524,
     items: [
@@ -34,7 +48,7 @@ const orders = [
   {
     id: "LUX-2438904",
     status: "Илгээгдсэн",
-    statusVariant: "default" as const,
+    statusVariant: "default",
     date: new Date("2026-04-22"),
     total: 219,
     items: [
@@ -49,7 +63,7 @@ const orders = [
   {
     id: "LUX-2419201",
     status: "Цуцлагдсан",
-    statusVariant: "destructive" as const,
+    statusVariant: "destructive",
     date: new Date("2026-03-11"),
     total: 145,
     items: [
