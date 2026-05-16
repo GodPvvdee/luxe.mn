@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(echo \"started, pid=$!\")",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Bash(curl -s -o /tmp/luxe-home.html -w \"HTTP %{http_code} in %{time_total}s\\\\n\" http://localhost:3000/)",
+      "Bash(/usr/bin/grep -n \"Menu\\\\|Search\\\\|Account\\\\|Toggle\" /Users/admin/Desktop/web/e-commerce/src/components/layout/navbar.tsx)"
+    ]
+  }
+}
