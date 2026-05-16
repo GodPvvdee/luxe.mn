@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { ProductCard } from "@/components/product/product-card";
-import { products } from "@/lib/mock-data";
+import type { ProductLite } from "@/lib/types";
 
-export function FeaturedProducts() {
+export function FeaturedProducts({ products }: { products: ProductLite[] }) {
   const items = products.filter((p) => p.featured).slice(0, 8);
   return (
     <section className="container py-20">

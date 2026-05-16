@@ -1,9 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { categories } from "@/lib/mock-data";
 import { ArrowUpRight } from "lucide-react";
 
-export function CategoriesGrid() {
+export type CategoryCard = {
+  slug: string;
+  name: string;
+  description: string | null;
+  image: string | null;
+};
+
+export function CategoriesGrid({ categories }: { categories: CategoryCard[] }) {
   return (
     <section className="container py-20">
       <div className="text-center max-w-2xl mx-auto mb-12">
@@ -24,13 +30,15 @@ export function CategoriesGrid() {
               i === 0 ? "lg:col-span-2 lg:row-span-2 aspect-square lg:aspect-auto" : "aspect-[4/5]"
             }`}
           >
-            <Image
-              src={c.image ?? ""}
-              alt={c.name}
-              fill
-              sizes="(max-width: 1024px) 50vw, 25vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-            />
+            {c.image && (
+              <Image
+                src={c.image}
+                alt={c.name}
+                fill
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
             <div className="absolute inset-0 p-5 flex flex-col justify-end text-white">
               <div className="flex items-center justify-between">
@@ -41,9 +49,11 @@ export function CategoriesGrid() {
                   <ArrowUpRight className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-sm text-white/80 max-w-xs mt-1 hidden md:block">
-                {c.description}
-              </p>
+              {c.description && (
+                <p className="text-sm text-white/80 max-w-xs mt-1 hidden md:block">
+                  {c.description}
+                </p>
+              )}
             </div>
           </Link>
         ))}

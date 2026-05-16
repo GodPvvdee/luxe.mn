@@ -72,7 +72,7 @@ export default function RegisterPage() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="space-y-1.5">
           <Label htmlFor="name">Бүтэн нэр</Label>
-          <Input id="name" {...register("name")} placeholder="Бат-Эрдэнэ Дорж" />
+          <Input id="name" {...register("name")} placeholder="Чагнаадорж пүрэв-эрдэнэ" />
           {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
         </div>
         <div className="space-y-1.5">

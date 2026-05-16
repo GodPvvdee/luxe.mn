@@ -6,16 +6,30 @@ import { FlashSale } from "@/components/home/flash-sale";
 import { Bestsellers } from "@/components/home/bestsellers";
 import { Testimonials } from "@/components/home/testimonials";
 import { Newsletter } from "@/components/home/newsletter";
+import { getAllProducts, getCategories } from "@/lib/products";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [products, categoryRows] = await Promise.all([
+    getAllProducts(),
+    getCategories(),
+  ]);
+  const categories = categoryRows.map((c) => ({
+    slug: c.slug,
+    name: c.name,
+    description: c.description,
+    image: c.image,
+  }));
+
   return (
     <>
       <Hero />
       <ValueProps />
-      <FeaturedProducts />
-      <CategoriesGrid />
-      <FlashSale />
-      <Bestsellers />
+      <FeaturedProducts products={products} />
+      <CategoriesGrid categories={categories} />
+      <FlashSale products={products} />
+      <Bestsellers products={products} />
       <Testimonials />
       <Newsletter />
     </>

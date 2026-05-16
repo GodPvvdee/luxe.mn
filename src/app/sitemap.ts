@@ -1,8 +1,15 @@
 import type { MetadataRoute } from "next";
-import { products, categories } from "@/lib/mock-data";
+import { getAllProducts, getCategories } from "@/lib/products";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const url = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const [products, categories] = await Promise.all([
+    getAllProducts(),
+    getCategories(),
+  ]);
+
   const staticRoutes = ["", "/products", "/cart", "/login", "/register", "/wishlist"].map(
     (p) => ({ url: `${url}${p}`, lastModified: new Date() }),
   );

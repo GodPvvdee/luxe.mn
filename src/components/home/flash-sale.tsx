@@ -3,7 +3,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Flame } from "lucide-react";
 import { ProductCard } from "@/components/product/product-card";
-import { products } from "@/lib/mock-data";
+import type { ProductLite } from "@/lib/types";
 
 function useCountdown(target: number) {
   const [now, setNow] = React.useState(Date.now());
@@ -18,7 +18,7 @@ function useCountdown(target: number) {
   return { h, m, s };
 }
 
-export function FlashSale() {
+export function FlashSale({ products }: { products: ProductLite[] }) {
   const items = products.filter((p) => p.onSale).slice(0, 4);
   const target = React.useMemo(
     () => Date.now() + 1000 * 60 * 60 * 18,

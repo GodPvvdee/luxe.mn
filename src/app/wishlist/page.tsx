@@ -14,7 +14,7 @@ import { usePreferences } from "@/store/preferences";
 import { useMounted } from "@/hooks/use-mounted";
 import { convert } from "@/lib/currency";
 import { formatPrice } from "@/lib/utils";
-import { products } from "@/lib/mock-data";
+import type { ProductLite } from "@/lib/types";
 
 export default function WishlistPage() {
   const mounted = useMounted();
@@ -77,24 +77,29 @@ export default function WishlistPage() {
                       <div className="mt-auto flex items-center gap-2 pt-3">
                         <Button
                           size="sm"
-                          onClick={() => {
-                            const full = products.find((p) => p.id === item.productId);
-                            if (!full) return;
-                            add(
-                              {
-                                productId: full.id,
-                                slug: full.slug,
-                                name: full.name,
-                                image: full.images[0],
-                                price: full.price,
-                                size: full.sizes[0],
-                                color: full.colors[0],
-                                maxStock: full.stock,
-                              },
-                              1,
-                            );
-                            setOpen(true);
-                            toast.success("Сагсанд нэмэгдлээ");
+                          onClick={async () => {
+                            try {
+                              const res = await fetch(`/api/products/${item.slug}`);
+                              if (!res.ok) throw new Error("not found");
+                              const { product } = (await res.json()) as { product: ProductLite };
+                              add(
+                                {
+                                  productId: product.id,
+                                  slug: product.slug,
+                                  name: product.name,
+                                  image: product.images[0],
+                                  price: product.price,
+                                  size: product.sizes[0],
+                                  color: product.colors[0],
+                                  maxStock: product.stock,
+                                },
+                                1,
+                              );
+                              setOpen(true);
+                              toast.success("Сагсанд нэмэгдлээ");
+                            } catch {
+                              toast.error("Бүтээгдэхүүн олдсонгүй");
+                            }
                           }}
                         >
                           <ShoppingBag className="h-3.5 w-3.5" />

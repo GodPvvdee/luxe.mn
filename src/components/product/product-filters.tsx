@@ -7,8 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
-import { categories } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
+type Category = { name: string; slug: string };
 
 const COLORS = [
   { name: "Хар", hex: "#1a1a1a" },
@@ -22,7 +23,7 @@ const COLORS = [
 
 const SIZES = ["XS", "S", "M", "L", "XL", "38", "40", "42", "44"];
 
-function FilterBody() {
+function FilterBody({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const params = useSearchParams();
 
@@ -150,12 +151,12 @@ function FilterBody() {
   );
 }
 
-export function ProductFilters() {
+export function ProductFilters({ categories }: { categories: Category[] }) {
   return (
     <>
       <aside className="hidden lg:block w-64 shrink-0">
         <div className="sticky top-24">
-          <FilterBody />
+          <FilterBody categories={categories} />
         </div>
       </aside>
 
@@ -171,7 +172,7 @@ export function ProductFilters() {
             <SheetTitle>Бүтээгдэхүүн шүүх</SheetTitle>
           </SheetHeader>
           <div className="p-6 pt-0">
-            <FilterBody />
+            <FilterBody categories={categories} />
           </div>
         </SheetContent>
       </Sheet>

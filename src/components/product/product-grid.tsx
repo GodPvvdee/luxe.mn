@@ -2,9 +2,9 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { ProductCard } from "./product-card";
-import { products } from "@/lib/mock-data";
+import type { ProductLite } from "@/lib/types";
 
-export function ProductGrid() {
+export function ProductGrid({ products }: { products: ProductLite[] }) {
   const params = useSearchParams();
   const cat = params.get("cat");
   const sale = params.get("sale");
@@ -45,7 +45,7 @@ export function ProductGrid() {
         list.sort((a, b) => Number(b.featured) - Number(a.featured));
     }
     return list;
-  }, [cat, sale, q, color, size, min, max, sort]);
+  }, [products, cat, sale, q, color, size, min, max, sort]);
 
   if (filtered.length === 0) {
     return (

@@ -7,22 +7,16 @@ import { ProductReviews } from "@/components/product/product-reviews";
 import { RelatedProducts } from "@/components/product/related-products";
 import { RecentlyViewed } from "@/components/product/recently-viewed";
 import { TrackRecent } from "@/components/product/track-recent";
-import {
-  getProductBySlug,
-  getRelatedProducts,
-  products,
-} from "@/lib/mock-data";
+import { getProductBySlug, getRelatedProducts } from "@/lib/products";
+
+export const dynamic = "force-dynamic";
 
 type Params = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
-}
-
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
-  if (!product) return { title: "Product not found" };
+  const product = await getProductBySlug(slug);
+  if (!product) return { title: "Бүтээгдэхүүн олдсонгүй" };
   return {
     title: product.name,
     description: product.description.slice(0, 160),
@@ -36,9 +30,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function ProductDetailPage({ params }: Params) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
-  const related = getRelatedProducts(product);
+  const related = await getRelatedProducts(product);
 
   return (
     <>

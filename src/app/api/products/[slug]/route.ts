@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
-import { getProductBySlug } from "@/lib/mock-data";
+import { getProductBySlug } from "@/lib/products";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) {
-    return NextResponse.json({ message: "Not found" }, { status: 404 });
+    return NextResponse.json({ message: "Олдсонгүй" }, { status: 404 });
   }
   return NextResponse.json({ product });
 }
