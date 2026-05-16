@@ -38,7 +38,7 @@ export function Hero() {
             className="text-lg text-muted-foreground max-w-xl"
           >
             Сайтар бодож урласан хэрэгцээт зүйлс — гутал, хувцас, аудио. Зөв
-            материал, зөв мастер, зөв ёс зүйгээр бүтсэн.
+            материал, зөв технологи, зөв ёс зүйгээр бүтсэн.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
