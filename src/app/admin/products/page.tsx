@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Plus, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,9 +26,11 @@ export default async function AdminProductsPage() {
         </div>
         <div className="flex gap-2">
           <Input placeholder="Бүтээгдэхүүн хайх…" className="max-w-xs" />
-          <Button>
-            <Plus className="h-4 w-4" />
-            Шинэ бүтээгдэхүүн
+          <Button asChild>
+            <Link href="/admin/products/new">
+              <Plus className="h-4 w-4" />
+              Шинэ бүтээгдэхүүн
+            </Link>
           </Button>
         </div>
       </div>
