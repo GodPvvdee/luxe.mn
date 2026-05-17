@@ -22,7 +22,8 @@ export default withAuth(
         if (req.nextUrl.pathname.startsWith("/admin")) return !!token;
         if (
           req.nextUrl.pathname.startsWith("/profile") ||
-          req.nextUrl.pathname.startsWith("/orders")
+          req.nextUrl.pathname.startsWith("/orders") ||
+          req.nextUrl.pathname.startsWith("/checkout")
         )
           return !!token;
         return true;
@@ -32,5 +33,10 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/profile/:path*", "/orders/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/profile/:path*",
+    "/orders/:path*",
+    "/checkout/:path*",
+  ],
 };

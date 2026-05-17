@@ -19,7 +19,7 @@ import { checkoutSchema, type CheckoutInput } from "@/lib/validators";
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, clear } = useCart();
+  const { items, clear, promo } = useCart();
   const [loading, setLoading] = useState(false);
 
   const {
@@ -33,15 +33,39 @@ export default function CheckoutPage() {
   const onSubmit = async (data: CheckoutInput) => {
     setLoading(true);
     try {
-      // Production-д /api/checkout рүү POST хийж Stripe session үүсгэнэ.
-      // Demo: амжилттай захиалгыг симуляц.
-      await new Promise((r) => setTimeout(r, 800));
-      const orderId = `LUX-${Date.now().toString().slice(-8)}`;
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          items: items.map((i) => ({
+            productId: i.productId,
+            name: i.name,
+            image: i.image,
+            price: i.price,
+            quantity: i.quantity,
+            size: i.size,
+            color: i.color,
+          })),
+          promoCode: promo?.code ?? null,
+          shippingMethod: "standard",
+        }),
+      });
+      if (!res.ok) {
+        if (res.status === 401) {
+          toast.error("Эхлээд нэвтэрнэ үү");
+          router.push("/login?callbackUrl=/checkout");
+          return;
+        }
+        const e = await res.json().catch(() => ({}));
+        throw new Error(e.message ?? "Захиалга бүтээж чадсангүй");
+      }
+      const { orderId } = (await res.json()) as { orderId: string };
       clear();
       router.push(`/checkout/success?order=${orderId}`);
       toast.success("Захиалга баталгаажлаа", { description: data.email });
-    } catch {
-      toast.error("Төлбөр гүйцэтгэгдсэнгүй");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Төлбөр гүйцэтгэгдсэнгүй");
     } finally {
       setLoading(false);
     }
