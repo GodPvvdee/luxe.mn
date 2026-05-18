@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
@@ -18,6 +18,8 @@ import { loginSchema, type LoginInput } from "@/lib/validators";
 
 export default function LoginPage() {
   const router = useRouter();
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl") ?? "/profile";
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
@@ -35,7 +37,7 @@ export default function LoginPage() {
       return;
     }
     toast.success("Дахин тавтай морил");
-    router.push("/profile");
+    router.push(callbackUrl);
   };
 
   return (

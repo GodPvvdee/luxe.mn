@@ -1,15 +1,19 @@
 "use client";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-export function SocialButtons() {
+export function SocialButtons({ defaultCallback = "/profile" }: { defaultCallback?: string }) {
+  // ?callbackUrl=/foo (middleware-р redirect хийгдсэн үед) хүлээж авна
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl") ?? defaultCallback;
   return (
     <div className="grid grid-cols-2 gap-3">
       <Button
         type="button"
         variant="outline"
         size="lg"
-        onClick={() => signIn("google", { callbackUrl: "/" })}
+        onClick={() => signIn("google", { callbackUrl })}
       >
         <GoogleIcon />
         Google
@@ -18,7 +22,7 @@ export function SocialButtons() {
         type="button"
         variant="outline"
         size="lg"
-        onClick={() => signIn("github", { callbackUrl: "/" })}
+        onClick={() => signIn("github", { callbackUrl })}
       >
         <GitHubIcon />
         GitHub
