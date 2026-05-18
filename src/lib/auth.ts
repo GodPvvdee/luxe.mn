@@ -45,6 +45,7 @@ export const authOptions: NextAuthOptions = {
           GitHubProvider({
             clientId: process.env.GITHUB_CLIENT_ID!,
             clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+            authorization: { params: { scope: "read:user user:email" } },
           }),
         ]
       : []),
@@ -55,22 +56,49 @@ export const authOptions: NextAuthOptions = {
     // ажиллуулна. Credentials provider өөрөө DB-д шалгасан тул алгасна.
     async signIn({ user, account }) {
       if (!account || account.provider === "credentials") return true;
-      if (!user.email) return false;
+
+      // GitHub email private-р хадгалсан үед provider шууд өгөхгүй —
+      // user:email scope-р api.github.com/user/emails-аас primary-г татна.
+      let email = user.email;
+      if (!email && account.provider === "github" && account.access_token) {
+        try {
+          const res = await fetch("https://api.github.com/user/emails", {
+            headers: {
+              Authorization: `Bearer ${account.access_token}`,
+              Accept: "application/vnd.github+json",
+            },
+          });
+          if (res.ok) {
+            const emails: { email: string; primary: boolean; verified: boolean }[] = await res.json();
+            const primary = emails.find((e) => e.primary && e.verified) ?? emails.find((e) => e.verified);
+            email = primary?.email ?? null;
+          }
+        } catch (err) {
+          console.error("[auth] failed to fetch github emails", err);
+        }
+      }
+
+      if (!email) {
+        console.error("[auth] sign-in failed: no email from", account.provider);
+        return false;
+      }
+
       const dbUser = await prisma.user.upsert({
-        where: { email: user.email },
+        where: { email },
         update: {
           name: user.name ?? undefined,
           image: user.image ?? undefined,
         },
         create: {
-          email: user.email,
+          email,
           name: user.name,
           image: user.image,
         },
       });
       // NextAuth `user`-т DB id-г суулгаснаар jwt callback зөв id ашиглана.
-      (user as { id?: string; role?: string }).id = dbUser.id;
-      (user as { id?: string; role?: string }).role = dbUser.role;
+      (user as { id?: string; email?: string | null; role?: string }).id = dbUser.id;
+      (user as { id?: string; email?: string | null; role?: string }).email = email;
+      (user as { id?: string; email?: string | null; role?: string }).role = dbUser.role;
       return true;
     },
     async jwt({ token, user }) {
