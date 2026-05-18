@@ -13,6 +13,7 @@ import {
   Moon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useSession, signOut } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
@@ -262,6 +264,11 @@ function CurrencySwitcher() {
 }
 
 function UserMenu() {
+  const { data: session } = useSession();
+  const role = (session?.user as { role?: string } | undefined)?.role;
+  const isAdmin = role === "ADMIN";
+  const isAuthed = !!session?.user;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -270,26 +277,48 @@ function UserMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuItem asChild>
-          <Link href="/login">Нэвтрэх</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/register">Бүртгүүлэх</Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/profile">Профайл</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/orders">Захиалга</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/wishlist">Хүслийн жагсаалт</Link>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/admin">Админ панель</Link>
-        </DropdownMenuItem>
+        {isAuthed ? (
+          <>
+            <DropdownMenuLabel className="px-3 pt-2 pb-1 text-xs text-muted-foreground">
+              {session?.user?.email}
+            </DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+              <Link href="/profile">Профайл</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/orders">Захиалга</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/wishlist">Хүслийн жагсаалт</Link>
+            </DropdownMenuItem>
+            {isAdmin && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/admin">Админ панель</Link>
+                </DropdownMenuItem>
+              </>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+                signOut({ callbackUrl: "/" });
+              }}
+            >
+              Гарах
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <>
+            <DropdownMenuItem asChild>
+              <Link href="/login">Нэвтрэх</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/register">Бүртгүүлэх</Link>
+            </DropdownMenuItem>
+          </>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

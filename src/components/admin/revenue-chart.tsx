@@ -9,22 +9,9 @@ import {
   YAxis,
 } from "recharts";
 
-const data = [
-  { month: "Jan", revenue: 24500, orders: 320 },
-  { month: "Feb", revenue: 28900, orders: 380 },
-  { month: "Mar", revenue: 31200, orders: 415 },
-  { month: "Apr", revenue: 38400, orders: 502 },
-  { month: "May", revenue: 42800, orders: 558 },
-  { month: "Jun", revenue: 39600, orders: 521 },
-  { month: "Jul", revenue: 47100, orders: 614 },
-  { month: "Aug", revenue: 51200, orders: 668 },
-  { month: "Sep", revenue: 49800, orders: 645 },
-  { month: "Oct", revenue: 58400, orders: 758 },
-  { month: "Nov", revenue: 64900, orders: 842 },
-  { month: "Dec", revenue: 72500, orders: 932 },
-];
+type Datum = { month: string; revenue: number };
 
-export function RevenueChart() {
+export function RevenueChart({ data }: { data: Datum[] }) {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <AreaChart data={data} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
@@ -43,7 +30,13 @@ export function RevenueChart() {
         <YAxis
           stroke="hsl(var(--muted-foreground))"
           tick={{ fontSize: 12 }}
-          tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+          tickFormatter={(v: number) =>
+            v >= 1_000_000
+              ? `${(v / 1_000_000).toFixed(1)}М`
+              : v >= 1_000
+                ? `${Math.round(v / 1_000)}K`
+                : String(v)
+          }
         />
         <Tooltip
           contentStyle={{
@@ -52,7 +45,7 @@ export function RevenueChart() {
             borderRadius: 12,
             fontSize: 12,
           }}
-          formatter={(value: number) => [`$${value.toLocaleString()}`, "Revenue"]}
+          formatter={(value: number) => [`${value.toLocaleString()} ₮`, "Орлого"]}
         />
         <Area
           type="monotone"

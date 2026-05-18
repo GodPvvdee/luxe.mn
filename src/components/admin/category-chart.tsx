@@ -9,14 +9,16 @@ import {
   YAxis,
 } from "recharts";
 
-const data = [
-  { name: "Footwear", value: 42 },
-  { name: "Apparel", value: 31 },
-  { name: "Audio", value: 18 },
-  { name: "Accessories", value: 9 },
-];
+type Datum = { name: string; value: number };
 
-export function CategoryChart() {
+export function CategoryChart({ data }: { data: Datum[] }) {
+  if (!data.length) {
+    return (
+      <div className="h-[300px] grid place-items-center text-sm text-muted-foreground">
+        Захиалга бүртгэгдээгүй
+      </div>
+    );
+  }
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -34,6 +36,7 @@ export function CategoryChart() {
             borderRadius: 12,
             fontSize: 12,
           }}
+          formatter={(value: number) => [`${value}%`, "Эзлэх"]}
         />
         <Bar dataKey="value" fill="hsl(var(--foreground))" radius={[8, 8, 0, 0]} />
       </BarChart>
