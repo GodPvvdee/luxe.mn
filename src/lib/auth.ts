@@ -50,6 +50,29 @@ export const authOptions: NextAuthOptions = {
       : []),
   ],
   callbacks: {
+    // OAuth (Google/GitHub)-р анх удаа нэвтэрсэн хэрэглэгчийг DB-д
+    // upsert хийнэ. Энэ нь Order.userId зэрэг гадаад түлхүүрийг алдаагүй
+    // ажиллуулна. Credentials provider өөрөө DB-д шалгасан тул алгасна.
+    async signIn({ user, account }) {
+      if (!account || account.provider === "credentials") return true;
+      if (!user.email) return false;
+      const dbUser = await prisma.user.upsert({
+        where: { email: user.email },
+        update: {
+          name: user.name ?? undefined,
+          image: user.image ?? undefined,
+        },
+        create: {
+          email: user.email,
+          name: user.name,
+          image: user.image,
+        },
+      });
+      // NextAuth `user`-т DB id-г суулгаснаар jwt callback зөв id ашиглана.
+      (user as { id?: string; role?: string }).id = dbUser.id;
+      (user as { id?: string; role?: string }).role = dbUser.role;
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = (user as { id: string }).id;
