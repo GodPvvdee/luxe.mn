@@ -14,19 +14,20 @@ export function Footer() {
       title: "Дэлгүүр",
       links: [
         { label: "Бүх бүтээгдэхүүн", href: "/products" },
-        { label: "Гутал", href: "/products?cat=footwear" },
-        { label: "Хувцас", href: "/products?cat=apparel" },
-        { label: "Хэрэгсэл", href: "/products?cat=accessories" },
-        { label: "Аудио", href: "/products?cat=audio" },
+        { label: "Тавилга", href: "/products?cat=furniture" },
+        { label: "Гэрэлтүүлэг", href: "/products?cat=lighting" },
+        { label: "Даавуу", href: "/products?cat=textiles" },
+        { label: "Ширээний эд", href: "/products?cat=tableware" },
+        { label: "Чимэглэл", href: "/products?cat=decor" },
         { label: "Хямдрал", href: "/products?sale=1" },
       ],
     },
     {
       title: "Тусламж",
       links: [
-        { label: "Хүргэлт", href: "#" },
+        { label: "Хүргэлт + угсралт", href: "#" },
         { label: "Буцаалт", href: "#" },
-        { label: "Хэмжээний заавар", href: "#" },
+        { label: "Хэмжээ + материал", href: "#" },
         { label: "Арчилгааны заавар", href: "#" },
         { label: "Холбоо барих", href: "#" },
       ],
@@ -49,8 +50,8 @@ export function Footer() {
           <div className="lg:col-span-5 space-y-6">
             <div className="font-display text-3xl tracking-tight">Luxe</div>
             <p className="text-muted-foreground max-w-md">
-              Амьдралд зориулсан. Тренд-ээс илүү удаан эдэлгээтэй, өөрсдийн
-              амьдардаг гариагаа хайрладаг хүмүүсийн хийсэн бүтээгдэхүүнүүд.
+              Гэрээ хайрлагч хүмүүст зориулсан тавилга, гэрэлтүүлэг,
+              даавуу, чимэглэл. Зөв материал, зөв мастер, зөв ёс зүй.
             </p>
             <div>
               <p className="text-sm font-medium mb-3">

@@ -36,10 +36,11 @@ import { cn } from "@/lib/utils";
 
 const nav = [
   { href: "/products", label: "Дэлгүүр" },
-  { href: "/products?cat=footwear", label: "Гутал" },
-  { href: "/products?cat=apparel", label: "Хувцас" },
-  { href: "/products?cat=accessories", label: "Хэрэгсэл" },
-  { href: "/products?cat=audio", label: "Аудио" },
+  { href: "/products?cat=furniture", label: "Тавилга" },
+  { href: "/products?cat=lighting", label: "Гэрэлтүүлэг" },
+  { href: "/products?cat=textiles", label: "Даавуу" },
+  { href: "/products?cat=tableware", label: "Ширээний эд" },
+  { href: "/products?cat=decor", label: "Чимэглэл" },
   { href: "/products?sale=1", label: "Хямдрал" },
 ];
 
@@ -158,10 +159,10 @@ export function Navbar() {
 
 function Marquee() {
   const items = [
-    "500,000 ₮-аас дээш захиалгад үнэгүй хүргэлт",
-    "Бүх насны засварын баталгаа",
+    "Улаанбаатарт үнэгүй хүргэлт · 500,000 ₮-аас дээш",
+    "Гэр гадна — 100 хоногийн чанарын баталгаа",
     "30 хоногийн дотор үнэгүй буцаах",
-    "Шинэ: Echo Studio гарлаа",
+    "Шинэ: Atlas Berber Wool Rug",
   ];
   return (
     <div className="bg-foreground text-background text-xs overflow-hidden">
@@ -215,10 +216,10 @@ function SearchBar() {
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Phantom Runner",
-                "Кашмер",
-                "Чихэвч",
-                "Цүнх",
+                "Хивс",
+                "Шалны лампадар",
+                "Ширээ",
+                "Ваар",
                 "Хямдрал",
               ].map((s) => (
                 <Link

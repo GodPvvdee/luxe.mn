@@ -1,25 +1,25 @@
-import { Truck, ShieldCheck, RefreshCw, Leaf } from "lucide-react";
+import { Truck, ShieldCheck, RefreshCw, Sparkles } from "lucide-react";
 
 const items = [
   {
     icon: Truck,
-    title: "Үнэгүй хүргэлт",
-    desc: "500,000 ₮-аас дээш захиалгад дэлхий даяар",
+    title: "Хүргэлт + угсралт",
+    desc: "Улаанбаатарт үнэгүй хүргэж тавилгаа угсарна",
   },
   {
     icon: ShieldCheck,
-    title: "Бүх насны засвар",
-    desc: "Бид бүтээгдэхүүн бүрийнхээ ард зогсдог",
+    title: "Чанарын баталгаа",
+    desc: "Тавилгад 5 жил, бусдад 1 жил",
   },
   {
     icon: RefreshCw,
     title: "30 хоногийн буцаалт",
-    desc: "Үнэгүй буцаалт, асуух зүйлгүй",
+    desc: "Гэртээ туршаад тохирохгүй бол үнэгүй буцаана",
   },
   {
-    icon: Leaf,
-    title: "Нүүрстөрөгчийн саармаг",
-    desc: "Илгээлт болгон, бүтээгдэхүүн болгон",
+    icon: Sparkles,
+    title: "Хувийн зөвлөгөө",
+    desc: "Дотоод дизайнерээс үнэгүй санал авах",
   },
 ];
 

@@ -18,7 +18,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border bg-background/60 backdrop-blur text-xs font-medium"
           >
             <Sparkles className="h-3 w-3" />
-            Шинэ улирал · 2026 оны хавар ирлээ
+            Шинэ улирал · 2026 оны цуглуулга ирлээ
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -26,9 +26,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight"
           >
-            Амьдралд зориулсан,{" "}
+            Гэр нь хүний{" "}
             <span className="italic text-muted-foreground">
-              удаан эдэлгээтэй.
+              өвөрмөц итгэл.
             </span>
           </motion.h1>
           <motion.p
@@ -37,8 +37,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground max-w-xl"
           >
-            Сайтар бодож урласан хэрэгцээт зүйлс — гутал, хувцас, аудио. Зөв
-            материал, зөв технологи, зөв ёс зүйгээр бүтсэн.
+            Тавилга, гэрэлтүүлэг, даавуу, ширээний эд — гэртээ халуун дулаан
+            уур амьсгал бүтээх материалуудыг сонгож, ёс зүйт мастеруудаар
+            хийлгэв.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -76,8 +77,8 @@ export function Hero() {
               ))}
             </div>
             <span>
-              <strong className="text-foreground">42,000+</strong> сэтгэл ханамжтай
-              хэрэглэгчид 28 оронд
+              <strong className="text-foreground">18,000+</strong> орон сууцыг
+              хамтдаа бүтээсэн
             </span>
           </motion.div>
         </div>
@@ -90,8 +91,8 @@ export function Hero() {
         >
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1400&q=85"
-              alt="Featured product"
+              src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=85"
+              alt="Aluna Lounge Chair"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -100,13 +101,13 @@ export function Hero() {
             <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
               <div className="text-white">
                 <div className="text-xs uppercase tracking-widest opacity-80">
-                  Онцлох · Гутал
+                  Онцлох · Тавилга
                 </div>
                 <div className="font-display text-2xl mt-1">
-                  Phantom Runner X1
+                  Aluna Lounge Chair
                 </div>
                 <Link
-                  href="/products/phantom-runner-x1"
+                  href="/products/aluna-lounge-chair"
                   className="mt-3 inline-flex items-center gap-1 text-sm font-medium hover:gap-2 transition-all"
                 >
                   Үзэх <ArrowRight className="h-4 w-4" />
@@ -116,7 +117,7 @@ export function Hero() {
           </div>
           <div className="hidden md:flex absolute -left-6 -bottom-6 h-32 w-32 rounded-2xl overflow-hidden shadow-2xl border-4 border-background">
             <Image
-              src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&q=85"
+              src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=85"
               alt=""
               width={200}
               height={200}
@@ -124,10 +125,10 @@ export function Hero() {
             />
           </div>
           <div className="hidden md:flex absolute -right-4 top-12 px-4 py-3 rounded-2xl bg-background/80 backdrop-blur-xl border shadow-xl flex-col">
-            <span className="text-xs text-muted-foreground">Энэ долоо хоногт хэмнэсэн</span>
-            <span className="font-display text-2xl mt-0.5">4.2 тэрбум ₮</span>
+            <span className="text-xs text-muted-foreground">Энэ долоо хоногт чимэглэсэн</span>
+            <span className="font-display text-2xl mt-0.5">240+ орон сууц</span>
             <span className="text-xs text-emerald-500 font-medium mt-0.5">
-              ↑ 12% өмнөх 7 хоногтой
+              ↑ 18% өмнөх 7 хоногтой
             </span>
           </div>
         </motion.div>
