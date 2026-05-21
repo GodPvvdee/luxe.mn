@@ -101,7 +101,6 @@ export default function CheckoutPage() {
       </div>
     );
   }
-console.log("items,",items)
   return (
     <div className="container py-10 lg:py-14">
       <Breadcrumbs
@@ -238,7 +237,7 @@ console.log("items,",items)
               <TabsList>
                 <TabsTrigger value="byl">
                   <Smartphone className="h-4 w-4 mr-1" />
-                  Byl
+                  Qpay
                 </TabsTrigger>
                 <TabsTrigger value="card">
                   <CreditCard className="h-4 w-4 mr-1" />
@@ -247,7 +246,7 @@ console.log("items,",items)
               </TabsList>
               <TabsContent value="byl" className="pt-4 space-y-2">
                 <div className="rounded-xl border bg-muted/30 p-4 text-sm space-y-1">
-                  <p className="font-medium">Byl-аар найдвартай төлөх</p>
+                  <p className="font-medium">Qpay-р төлөх</p>
                   <p className="text-xs text-muted-foreground flex items-center gap-1.5">
                     <Lock className="h-3 w-3" />
                     Banking app, картын төлбөр, купон бүгдийг Byl-ийн hosted
@@ -276,7 +275,7 @@ console.log("items,",items)
             {loading
               ? "Боловсруулж байна…"
               : paymentMethod === "byl"
-                ? "Byl-ээр төлөх"
+                ? "Qpay-р төлөх"
                 : "Картаар төлөх"}
           </Button>
         </div>
