@@ -25,24 +25,23 @@ const appName = process.env.NEXT_PUBLIC_APP_NAME ?? "Luxe";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: {
-    default: `${appName} Home — Гэртээ амралт төгөлдөр.`,
-    template: `%s · ${appName} Home`,
+    default: `${appName} — Гэрэл ба цэцэг.`,
+    template: `%s · ${appName}`,
   },
   description:
-    "Тавилга, гэрэлтүүлэг, даавуу, ширээний эд, чимэглэл — гэр гэртээ амралт авчрах дээд зэрэглэлийн материалууд.",
+    "Дулаан гэрэлтүүлэг ба шинэхэн цэцгээр өрөө гэрийг амилуулна. Улаанбаатарт тэр өдөрт нь хүргэлт.",
   keywords: [
-    "тавилга",
     "гэрэлтүүлэг",
-    "home decor",
-    "interior",
-    "хивс",
-    "ваар",
+    "цэцэг",
+    "цэцгийн баглаа",
+    "люстер",
     "монгол онлайн дэлгүүр",
+    "цэцгийн дэлгүүр",
   ],
   authors: [{ name: appName }],
   openGraph: {
     title: appName,
-    description: "Гэрээ хайрлагч хүмүүст зориулсан тавилга, гэрэлтүүлэг, даавуу, чимэглэл.",
+    description: "Дулаан гэрэлтүүлэг ба шинэхэн цэцэг — гэр гэрийг амилуулах хоёр чухал зүйл.",
     type: "website",
     siteName: appName,
     locale: "mn_MN",

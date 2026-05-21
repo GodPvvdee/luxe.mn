@@ -14,11 +14,8 @@ export function Footer() {
       title: "Дэлгүүр",
       links: [
         { label: "Бүх бүтээгдэхүүн", href: "/products" },
-        { label: "Тавилга", href: "/products?cat=furniture" },
         { label: "Гэрэлтүүлэг", href: "/products?cat=lighting" },
-        { label: "Даавуу", href: "/products?cat=textiles" },
-        { label: "Ширээний эд", href: "/products?cat=tableware" },
-        { label: "Чимэглэл", href: "/products?cat=decor" },
+        { label: "Цэцэг", href: "/products?cat=flowers" },
         { label: "Хямдрал", href: "/products?sale=1" },
       ],
     },
@@ -50,8 +47,8 @@ export function Footer() {
           <div className="lg:col-span-5 space-y-6">
             <div className="font-display text-3xl tracking-tight">Luxe</div>
             <p className="text-muted-foreground max-w-md">
-              Гэрээ хайрлагч хүмүүст зориулсан тавилга, гэрэлтүүлэг,
-              даавуу, чимэглэл. Зөв материал, зөв мастер, зөв ёс зүй.
+              Гэрийн дулаан гэрэлтүүлэг, сэтгэл хөдөлгөм цэцгээр өрөө бүхнийг
+              амилуулна. Зөв материал, зөв мастер, тэр өдөрт нь хүргэлт.
             </p>
             <div>
               <p className="text-sm font-medium mb-3">

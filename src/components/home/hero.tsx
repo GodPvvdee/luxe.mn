@@ -26,9 +26,9 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="font-display text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-tight"
           >
-            Гэр нь хүний{" "}
+            Гэрэл бол зөөлөн зүй,{" "}
             <span className="italic text-muted-foreground">
-              өвөрмөц итгэл.
+              цэцэг бол анхны баяр.
             </span>
           </motion.h1>
           <motion.p
@@ -37,9 +37,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg text-muted-foreground max-w-xl"
           >
-            Тавилга, гэрэлтүүлэг, даавуу, ширээний эд — гэртээ халуун дулаан
-            уур амьсгал бүтээх материалуудыг сонгож, ёс зүйт мастеруудаар
-            хийлгэв.
+            Дулаан гэрэлтүүлэг, шинэхэн цэцгийн баглаа — гэр гэртээ амьдрал
+            бэлэглэх хоёр энгийн мөртлөө хүчтэй зүйл.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -77,8 +76,8 @@ export function Hero() {
               ))}
             </div>
             <span>
-              <strong className="text-foreground">18,000+</strong> орон сууцыг
-              хамтдаа бүтээсэн
+              <strong className="text-foreground">12,000+</strong> айлд гэрэл,
+              цэцэг хүргэсэн
             </span>
           </motion.div>
         </div>
@@ -91,8 +90,8 @@ export function Hero() {
         >
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=1400&q=85"
-              alt="Aluna Lounge Chair"
+              src="https://images.unsplash.com/photo-1456574808786-d2ba7a6aa654?w=1400&q=85"
+              alt="Blush Peony Bouquet"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
@@ -101,13 +100,13 @@ export function Hero() {
             <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
               <div className="text-white">
                 <div className="text-xs uppercase tracking-widest opacity-80">
-                  Онцлох · Тавилга
+                  Онцлох · Цэцэг
                 </div>
                 <div className="font-display text-2xl mt-1">
-                  Aluna Lounge Chair
+                  Blush Peony Bouquet
                 </div>
                 <Link
-                  href="/products/aluna-lounge-chair"
+                  href="/products/blush-peony-bouquet"
                   className="mt-3 inline-flex items-center gap-1 text-sm font-medium hover:gap-2 transition-all"
                 >
                   Үзэх <ArrowRight className="h-4 w-4" />
@@ -117,7 +116,7 @@ export function Hero() {
           </div>
           <div className="hidden md:flex absolute -left-6 -bottom-6 h-32 w-32 rounded-2xl overflow-hidden shadow-2xl border-4 border-background">
             <Image
-              src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=85"
+              src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=400&q=85"
               alt=""
               width={200}
               height={200}
@@ -125,10 +124,10 @@ export function Hero() {
             />
           </div>
           <div className="hidden md:flex absolute -right-4 top-12 px-4 py-3 rounded-2xl bg-background/80 backdrop-blur-xl border shadow-xl flex-col">
-            <span className="text-xs text-muted-foreground">Энэ долоо хоногт чимэглэсэн</span>
-            <span className="font-display text-2xl mt-0.5">240+ орон сууц</span>
+            <span className="text-xs text-muted-foreground">Өнөөдөр хүргэсэн</span>
+            <span className="font-display text-2xl mt-0.5">320+ баглаа</span>
             <span className="text-xs text-emerald-500 font-medium mt-0.5">
-              ↑ 18% өмнөх 7 хоногтой
+              ↑ 24% өмнөх 7 хоногтой
             </span>
           </div>
         </motion.div>

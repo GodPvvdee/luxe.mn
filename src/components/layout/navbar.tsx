@@ -36,11 +36,8 @@ import { cn } from "@/lib/utils";
 
 const nav = [
   { href: "/products", label: "Дэлгүүр" },
-  { href: "/products?cat=furniture", label: "Тавилга" },
   { href: "/products?cat=lighting", label: "Гэрэлтүүлэг" },
-  { href: "/products?cat=textiles", label: "Даавуу" },
-  { href: "/products?cat=tableware", label: "Ширээний эд" },
-  { href: "/products?cat=decor", label: "Чимэглэл" },
+  { href: "/products?cat=flowers", label: "Цэцэг" },
   { href: "/products?sale=1", label: "Хямдрал" },
 ];
 
@@ -159,10 +156,10 @@ export function Navbar() {
 
 function Marquee() {
   const items = [
-    "Улаанбаатарт үнэгүй хүргэлт · 500,000 ₮-аас дээш",
-    "Гэр гадна — 100 хоногийн чанарын баталгаа",
-    "30 хоногийн дотор үнэгүй буцаах",
-    "Шинэ: Atlas Berber Wool Rug",
+    "Улаанбаатар хотод тэр өдөртөө цэцгийн хүргэлт",
+    "Гэрэлтүүлэгт 5 жилийн чанарын баталгаа",
+    "Шинэхэн цэцгийг 7 хоног эдэлгээтэй гэж амлая",
+    "Шинэ: Blush Peony Bouquet",
   ];
   return (
     <div className="bg-foreground text-background text-xs overflow-hidden">
@@ -216,10 +213,10 @@ function SearchBar() {
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
               {[
-                "Хивс",
                 "Шалны лампадар",
-                "Ширээ",
-                "Ваар",
+                "Сарнай",
+                "Пион",
+                "Эвкалипт",
                 "Хямдрал",
               ].map((s) => (
                 <Link
