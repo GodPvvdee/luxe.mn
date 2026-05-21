@@ -90,7 +90,7 @@ export function Hero() {
         >
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1456574808786-d2ba7a6aa654?w=1400&q=85"
+              src="https://images.unsplash.com/photo-1617044243927-6d36b5694372?q=80&w=986&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Blush Peony Bouquet"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -116,7 +116,7 @@ export function Hero() {
           </div>
           <div className="hidden md:flex absolute -left-6 -bottom-6 h-32 w-32 rounded-2xl overflow-hidden shadow-2xl border-4 border-background">
             <Image
-              src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=400&q=85"
+              src="https://images.unsplash.com/photo-1629048805149-1879ca41f225?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt=""
               width={200}
               height={200}
