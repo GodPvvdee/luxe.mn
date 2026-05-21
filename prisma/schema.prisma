@@ -176,7 +176,7 @@ model Order {
 model OrderItem {
   id        String  @id @default(cuid())
   orderId   String
-  productId String
+  productId String?  // Product устсан үед order history-г алдахгүй
   name      String
   image     String?
   price     Decimal @db.Decimal(10, 2)
@@ -184,8 +184,8 @@ model OrderItem {
   size      String?
   color     String?
 
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
 }
 
 model WishlistItem {

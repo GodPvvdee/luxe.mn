@@ -75,6 +75,16 @@ export async function POST(req: Request) {
   }
   const total = subtotal - discount;
 
+  // Сагсан дахь барааны ID хэвээр DB-д байгаа эсэхийг шалгана.
+  // Брэнд rebrand-н дараа хэрэглэгчийн сагсанд устсан барааны ID үлдсэн
+  // байж болзошгүй — энэ үед FK зөрчилийг тойрч `productId = null` болгоно
+  // (бараа OrderItem-д snapshot хийгдсэн нэр/үнэ/зургийг хадгална).
+  const existing = await prisma.product.findMany({
+    where: { id: { in: data.items.map((i) => i.productId) } },
+    select: { id: true },
+  });
+  const validIds = new Set(existing.map((x) => x.id));
+
   const address = await prisma.address.create({
     data: {
       userId,
@@ -105,7 +115,7 @@ export async function POST(req: Request) {
       paymentMethod: data.paymentMethod,
       items: {
         create: data.items.map((i) => ({
-          productId: i.productId,
+          productId: validIds.has(i.productId) ? i.productId : null,
           name: i.name,
           image: i.image ?? null,
           price: i.price,
