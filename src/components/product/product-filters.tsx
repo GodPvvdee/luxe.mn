@@ -118,10 +118,10 @@ function FilterBody({ categories }: { categories: Category[] }) {
       <Separator />
 
       <div>
-        <Label className="text-xs uppercase tracking-widest text-muted-foreground">
+        {/* <Label className="text-xs uppercase tracking-widest text-muted-foreground">
           Хэмжээ
-        </Label>
-        <div className="mt-3 flex flex-wrap gap-2">
+        </Label> */}
+        {/* <div className="mt-3 flex flex-wrap gap-2">
           {SIZES.map((s) => (
             <button
               key={s}
@@ -136,7 +136,7 @@ function FilterBody({ categories }: { categories: Category[] }) {
               {s}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       <Button
