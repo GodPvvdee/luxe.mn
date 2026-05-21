@@ -1,25 +1,25 @@
-import { Truck, ShieldCheck, RefreshCw, Sparkles } from "lucide-react";
+import { Truck, Flower2, RefreshCw, Sparkles } from "lucide-react";
 
 const items = [
   {
     icon: Truck,
-    title: "Хүргэлт + угсралт",
-    desc: "Улаанбаатарт үнэгүй хүргэж тавилгаа угсарна",
+    title: "Тэр өдрийн хүргэлт",
+    desc: "Улаанбаатарт өглөө захиалга, орой хүргэлт",
   },
   {
-    icon: ShieldCheck,
-    title: "Чанарын баталгаа",
-    desc: "Тавилгад 5 жил, бусдад 1 жил",
+    icon: Flower2,
+    title: "Цэцгийн сэргэг баталгаа",
+    desc: "5 хоног дотор гажуудвал үнэгүй сольно",
   },
   {
     icon: RefreshCw,
-    title: "30 хоногийн буцаалт",
-    desc: "Гэртээ туршаад тохирохгүй бол үнэгүй буцаана",
+    title: "Гэрэлтүүлгийн засвар",
+    desc: "Лампад 5 жилийн чанарын баталгаа",
   },
   {
     icon: Sparkles,
-    title: "Хувийн зөвлөгөө",
-    desc: "Дотоод дизайнерээс үнэгүй санал авах",
+    title: "Стайлингын зөвлөгөө",
+    desc: "Флорист, дотоод дизайнерээс үнэгүй санал",
   },
 ];
 
