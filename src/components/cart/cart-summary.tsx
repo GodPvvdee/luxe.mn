@@ -17,11 +17,8 @@ export function CartSummary({ checkoutHref = "/checkout" }: { checkoutHref?: str
   const [code, setCode] = useState("");
 
   const sub = subtotal();
-  const shipping = sub > 150 || sub === 0 ? 0 : 12;
   const discount = promo ? (sub * promo.percent) / 100 : 0;
-  const taxable = sub - discount;
-  const tax = taxable * 0.08;
-  const total = taxable + shipping + tax;
+  const total = sub - discount;
 
   const apply = () => {
     const ok = applyPromo(code.trim());
@@ -39,10 +36,6 @@ export function CartSummary({ checkoutHref = "/checkout" }: { checkoutHref?: str
 
       <div className="space-y-2 text-sm">
         <Row label="Дэд дүн" value={formatPrice(convert(sub, currency), currency)} />
-        <Row
-          label="Хүргэлт"
-          value={shipping === 0 ? "Үнэгүй" : formatPrice(convert(shipping, currency), currency)}
-        />
         {promo && (
           <Row
             label={`Хөнгөлөлт (${promo.code})`}
@@ -50,7 +43,6 @@ export function CartSummary({ checkoutHref = "/checkout" }: { checkoutHref?: str
             highlight
           />
         )}
-        <Row label="Татвар (ойролцоогоор)" value={formatPrice(convert(tax, currency), currency)} />
       </div>
 
       <Separator />
@@ -98,7 +90,7 @@ export function CartSummary({ checkoutHref = "/checkout" }: { checkoutHref?: str
       </Button>
 
       <p className="text-xs text-muted-foreground text-center">
-        500,000 ₮-аас дээш үнэгүй хүргэлт · Үнэгүй буцаалт · Бүх насны засвар
+        Үнэгүй буцаалт · Бүх насны засвар
       </p>
     </div>
   );

@@ -61,8 +61,9 @@ export async function POST(req: Request) {
 
   // Server-side recalculation — client-ийн дүнг хэзээ ч битгий бат.
   const subtotal = data.items.reduce((s, i) => s + i.price * i.quantity, 0);
-  const shipping =
-    data.shippingMethod === "express" ? 15 : subtotal > 150 ? 0 : 12;
+  // Хүргэлт ба татварыг checkout-аас хассан (одоохондоо 0).
+  const shipping = 0;
+  const tax = 0;
 
   let discount = 0;
   if (data.promoCode) {
@@ -72,9 +73,7 @@ export async function POST(req: Request) {
     if (promo?.percent) discount = (subtotal * promo.percent) / 100;
     else if (promo?.amount) discount = Number(promo.amount);
   }
-  const taxable = subtotal - discount;
-  const tax = taxable * 0.08;
-  const total = taxable + shipping + tax;
+  const total = subtotal - discount;
 
   const address = await prisma.address.create({
     data: {

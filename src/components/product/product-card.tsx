@@ -117,7 +117,7 @@ export function ProductCard({
               }}
             >
               <ShoppingBag className="h-4 w-4" />
-              Хурдан нэмэх
+              Сагсанд нэмэх
             </Button>
           </div>
         </div>
