@@ -14,30 +14,21 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { CartSummary } from "@/components/cart/cart-summary";
-import { QpayDialog } from "@/components/cart/qpay-dialog";
 import { useCart } from "@/store/cart";
 import { checkoutSchema, type CheckoutInput } from "@/lib/validators";
 
-type PaymentMethod = "card" | "qpay";
+type PaymentMethod = "card" | "byl";
 
-type QpayPayload = {
-  orderId: string;
-  amountMNT: number;
-  mode: "qpay" | "qpay-demo";
-  invoice: {
-    invoiceId: string;
-    qrText: string;
-    qrImage?: string;
-    urls: { name: string; description: string; logo: string; link: string }[];
-  };
-};
+type OrderApiResponse =
+  | { orderId: string; mode: "stripe"; redirectUrl: string }
+  | { orderId: string; mode: "byl"; redirectUrl: string }
+  | { orderId: string; mode: "demo"; redirectUrl: string };
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, clear, promo } = useCart();
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("qpay");
-  const [qpay, setQpay] = useState<QpayPayload | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("byl");
 
   const {
     register,
@@ -78,37 +69,18 @@ export default function CheckoutPage() {
         const e = await res.json().catch(() => ({}));
         throw new Error(e.message ?? "Захиалга бүтээж чадсангүй");
       }
-      const data2 = (await res.json()) as
-        | { orderId: string; mode: "stripe"; redirectUrl: string }
-        | { orderId: string; mode: "demo"; redirectUrl: string }
-        | {
-            orderId: string;
-            mode: "qpay" | "qpay-demo";
-            amountMNT: number;
-            invoice: QpayPayload["invoice"];
-          };
+      const result = (await res.json()) as OrderApiResponse;
 
-      if (data2.mode === "stripe") {
-        // Карт — Stripe-руу шилжүүлнэ. Сагсыг success-н дараа цэвэрлэнэ.
-        window.location.href = data2.redirectUrl;
+      if (result.mode === "stripe" || result.mode === "byl") {
+        // Гадаад hosted төлбөрийн хуудас руу redirect.
+        // Сагсыг success хуудас руу буцсаны дараа цэвэрлэнэ.
+        window.location.href = result.redirectUrl;
         return;
       }
-      if (data2.mode === "demo") {
-        clear();
-        toast.success("Захиалга баталгаажлаа", { description: data.email });
-        router.push(data2.redirectUrl);
-        return;
-      }
-      // QPay flow — QR код dialog
-      setQpay({
-        orderId: data2.orderId,
-        amountMNT: data2.amountMNT,
-        mode: data2.mode,
-        invoice: data2.invoice,
-      });
-      toast.success("QR код үүсгэгдлээ", {
-        description: "Банкны апп-аар сканнердана уу",
-      });
+      // Demo (credentials байхгүй) — шууд success.
+      clear();
+      toast.success("Захиалга баталгаажлаа", { description: data.email });
+      router.push(result.redirectUrl);
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Төлбөр гүйцэтгэгдсэнгүй");
     } finally {
@@ -116,7 +88,7 @@ export default function CheckoutPage() {
     }
   };
 
-  if (items.length === 0 && !qpay) {
+  if (items.length === 0) {
     return (
       <div className="container py-20 text-center">
         <h1 className="font-display text-3xl">Сагс хоосон байна</h1>
@@ -264,21 +236,22 @@ export default function CheckoutPage() {
               onValueChange={(v) => setPaymentMethod(v as PaymentMethod)}
             >
               <TabsList>
-                <TabsTrigger value="qpay">
+                <TabsTrigger value="byl">
                   <Smartphone className="h-4 w-4 mr-1" />
-                  QPay
+                  Byl
                 </TabsTrigger>
                 <TabsTrigger value="card">
                   <CreditCard className="h-4 w-4 mr-1" />
                   Карт
                 </TabsTrigger>
               </TabsList>
-              <TabsContent value="qpay" className="pt-4 space-y-2">
+              <TabsContent value="byl" className="pt-4 space-y-2">
                 <div className="rounded-xl border bg-muted/30 p-4 text-sm space-y-1">
-                  <p className="font-medium">Банкны апп-аар QR төлөх</p>
-                  <p className="text-xs text-muted-foreground">
-                    &quot;Захиалга өгөх&quot; даргмагц QR код гарч ирнэ. Khan, Голомт, ХХБ,
-                    Хас банк бүгд ажиллана.
+                  <p className="font-medium">Byl-аар найдвартай төлөх</p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                    <Lock className="h-3 w-3" />
+                    Banking app, картын төлбөр, купон бүгдийг Byl-ийн hosted
+                    хуудас дээр гүйцэтгэнэ.
                   </p>
                 </div>
               </TabsContent>
@@ -302,8 +275,8 @@ export default function CheckoutPage() {
           >
             {loading
               ? "Боловсруулж байна…"
-              : paymentMethod === "qpay"
-                ? "QR код үүсгэх"
+              : paymentMethod === "byl"
+                ? "Byl-ээр төлөх"
                 : "Картаар төлөх"}
           </Button>
         </div>
@@ -312,21 +285,6 @@ export default function CheckoutPage() {
           <CartSummary checkoutHref="#" />
         </div>
       </form>
-
-      {qpay && (
-        <QpayDialog
-          open={!!qpay}
-          orderId={qpay.orderId}
-          amountMNT={qpay.amountMNT}
-          mode={qpay.mode}
-          invoice={qpay.invoice}
-          onClose={() => {
-            // Хэрэглэгч QR-г хаасан үед сагсыг үлдээнэ — захиалга PENDING
-            // хэвээр /orders дотроос дахин нээх боломжтой.
-            setQpay(null);
-          }}
-        />
-      )}
     </div>
   );
 }

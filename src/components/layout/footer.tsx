@@ -110,8 +110,6 @@ export function Footer() {
           <div className="flex flex-wrap gap-4">
             <Link href="#">Нууцлал</Link>
             <Link href="#">Үйлчилгээний нөхцөл</Link>
-            <Link href="#">Cookies</Link>
-            <Link href="#">Хүртээмж</Link>
           </div>
         </div>
       </div>

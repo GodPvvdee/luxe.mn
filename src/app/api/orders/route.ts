@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { sendOrderConfirmation } from "@/lib/email";
 import { stripe } from "@/lib/stripe";
 import { convert } from "@/lib/currency";
-import { createInvoice, isQpayConfigured } from "@/lib/qpay";
+import { createCheckout as createBylCheckout, isBylConfigured } from "@/lib/byl";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +33,7 @@ const body = z.object({
   items: z.array(lineItem).min(1),
   promoCode: z.string().optional().nullable(),
   shippingMethod: z.enum(["standard", "express"]).default("standard"),
-  paymentMethod: z.enum(["card", "qpay", "demo"]).default("demo"),
+  paymentMethod: z.enum(["card", "byl", "demo"]).default("demo"),
 });
 
 export async function POST(req: Request) {
@@ -90,7 +90,6 @@ export async function POST(req: Request) {
     },
   });
 
-  // Бүх төлбөрийн арга PENDING-аар эхэлнэ. Webhook эсвэл demo шууд PAID.
   const isDemoOnly = data.paymentMethod === "demo";
   const order = await prisma.order.create({
     data: {
@@ -127,8 +126,10 @@ export async function POST(req: Request) {
   // -------- Card (Stripe) --------
   if (data.paymentMethod === "card") {
     if (!stripe) {
-      // Stripe тохируулагдаагүй бол шууд амжилттай simulate
-      await prisma.order.update({ where: { id: order.id }, data: { status: "PAID" } });
+      await prisma.order.update({
+        where: { id: order.id },
+        data: { status: "PAID" },
+      });
       fireConfirmation(data, order.id, total);
       return NextResponse.json({
         orderId: order.id,
@@ -166,32 +167,53 @@ export async function POST(req: Request) {
     });
   }
 
-  // -------- QPay --------
-  if (data.paymentMethod === "qpay") {
-    // QPay-н дүн нь ₮-р — USD-аас хөрвүүлнэ.
-    const amountMNT = Math.round(convert(total, "MNT"));
-    try {
-      const invoice = await createInvoice({
-        orderId: order.id,
-        amount: amountMNT,
-        description: `Luxe захиалга ${order.id.slice(0, 8)}`,
-        callbackUrl: `${origin}/api/webhooks/qpay?order=${order.id}`,
-        customerEmail: data.email,
-      });
+  // -------- Byl (Mongolian payment hub) --------
+  if (data.paymentMethod === "byl") {
+    if (!isBylConfigured()) {
+      // Тохиргоо байхгүй бол шууд амжилттай гэж тооцно (demo)
       await prisma.order.update({
         where: { id: order.id },
-        data: { paymentRef: invoice.invoiceId },
+        data: { status: "PAID" },
       });
+      fireConfirmation(data, order.id, total);
       return NextResponse.json({
         orderId: order.id,
-        mode: isQpayConfigured() ? "qpay" : "qpay-demo",
-        amountMNT,
-        invoice,
+        mode: "demo",
+        redirectUrl: `/checkout/success?order=${order.id}`,
+      });
+    }
+
+    try {
+      // USD → MNT хөрвүүлж бүхэл тоо болгоно
+      const items = data.items.map((i) => ({
+        name: i.name,
+        description: [i.size, i.color].filter(Boolean).join(" · ") || undefined,
+        quantity: i.quantity,
+        unitAmount: Math.round(convert(i.price, "MNT")),
+      }));
+
+      const checkout = await createBylCheckout({
+        items,
+        orderId: order.id,
+        successUrl: `${origin}/checkout/success?order=${order.id}`,
+        cancelUrl: `${origin}/cart`,
+        customerEmail: data.email,
+      });
+
+      await prisma.order.update({
+        where: { id: order.id },
+        data: { paymentRef: String(checkout.id) },
+      });
+
+      return NextResponse.json({
+        orderId: order.id,
+        mode: "byl",
+        redirectUrl: checkout.url,
       });
     } catch (err) {
-      console.error("[orders] qpay error:", err);
+      console.error("[orders] byl error:", err);
       return NextResponse.json(
-        { message: err instanceof Error ? err.message : "QPay алдаа" },
+        { message: err instanceof Error ? err.message : "Byl алдаа" },
         { status: 500 },
       );
     }
