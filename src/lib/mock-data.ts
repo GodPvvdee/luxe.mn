@@ -158,8 +158,8 @@ export const mockProducts: SeedProduct[] = [
     compareAt: 85,
     stock: 80,
     images: [
-      "https://images.unsplash.com/photo-1602874801006-e26c4b1f0cb3?w=1200&q=85",
       "https://images.unsplash.com/photo-1572276596237-5db2c3e16c5d?w=1200&q=85",
+      "https://images.unsplash.com/photo-1606170033648-5d55a3edf314?w=1200&q=85",
     ],
     sizes: ["3 ширхэг", "6 ширхэг"],
     colors: ["Цагаан", "Цайвар сарнай", "Шар бал"],
@@ -181,8 +181,8 @@ export const mockProducts: SeedProduct[] = [
     compareAt: 1690,
     stock: 6,
     images: [
-      "https://images.unsplash.com/photo-1535448072546-ed7167c0a76b?w=1200&q=85",
-      "https://images.unsplash.com/photo-1601925260367-2d6ddd1eb43e?w=1200&q=85",
+      "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=1200&q=85",
+      "https://images.unsplash.com/photo-1564540583246-934409427776?w=1200&q=85",
     ],
     sizes: ["160×230", "200×290", "240×340"],
     colors: ["Цагаан-хар", "Шар-зэс"],
@@ -201,7 +201,7 @@ export const mockProducts: SeedProduct[] = [
     price: 145,
     stock: 36,
     images: [
-      "https://images.unsplash.com/photo-1620230874645-5d2c0f72a3a8?w=1200&q=85",
+      "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=1200&q=85",
       "https://images.unsplash.com/photo-1556139930-c23fa4a4f934?w=1200&q=85",
     ],
     sizes: ["130×170см"],
@@ -222,7 +222,7 @@ export const mockProducts: SeedProduct[] = [
     stock: 22,
     images: [
       "https://images.unsplash.com/photo-1561948955-570b270e7c36?w=1200&q=85",
-      "https://images.unsplash.com/photo-1592786358614-c6e4b7c4ad8c?w=1200&q=85",
+      "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=1200&q=85",
     ],
     sizes: ["45×45см"],
     colors: ["Зэс шар", "Чулуун саарал", "Цайвар сарнай", "Хөвдөн ногоон"],
@@ -264,8 +264,8 @@ export const mockProducts: SeedProduct[] = [
     compareAt: 240,
     stock: 30,
     images: [
-      "https://images.unsplash.com/photo-1614245528148-fb2dca1d18b5?w=1200&q=85",
-      "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=1200&q=85",
+      "https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?w=1200&q=85",
+      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200&q=85",
     ],
     sizes: ["6 ширхэг"],
     colors: ["Цэвэр шил"],
@@ -306,8 +306,8 @@ export const mockProducts: SeedProduct[] = [
     price: 124,
     stock: 28,
     images: [
-      "https://images.unsplash.com/photo-1602178141046-cb1d29bb01e9?w=1200&q=85",
-      "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1200&q=85",
+      "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1200&q=85",
+      "https://images.unsplash.com/photo-1495231916356-a86217efff12?w=1200&q=85",
     ],
     sizes: ["Жижиг", "Дунд", "Том"],
     colors: ["Шохой цагаан", "Зэс шар", "Шавар"],
@@ -327,7 +327,7 @@ export const mockProducts: SeedProduct[] = [
     stock: 14,
     images: [
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=85",
-      "https://images.unsplash.com/photo-1603792907191-39d2c0b0c8e3?w=1200&q=85",
+      "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1200&q=85",
     ],
     sizes: ["Ø 60см", "Ø 80см", "Ø 100см"],
     colors: ["Гууль", "Матт хар", "Антик алт"],
