@@ -85,7 +85,7 @@ export function CartSummary({ checkoutHref = "/checkout" }: { checkoutHref?: str
       <Button size="lg" className="w-full" disabled={items.length === 0} asChild>
         <Link href={checkoutHref}>
           <Lock className="h-4 w-4" />
-          Найдвартай төлбөр
+          Төлөх
         </Link>
       </Button>
 

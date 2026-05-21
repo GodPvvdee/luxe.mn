@@ -101,7 +101,7 @@ export default function CheckoutPage() {
       </div>
     );
   }
-
+console.log("items,",items)
   return (
     <div className="container py-10 lg:py-14">
       <Breadcrumbs
