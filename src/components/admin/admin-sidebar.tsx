@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
+import { toast } from "sonner";
 import {
   LayoutDashboard,
   Package,
@@ -14,13 +16,13 @@ import {
 import { cn } from "@/lib/utils";
 
 const items = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard },
-  { href: "/admin/products", label: "Products", icon: Package },
-  { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
-  { href: "/admin/customers", label: "Customers", icon: Users },
-  { href: "/admin/categories", label: "Categories", icon: Tag },
-  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/admin/settings", label: "Settings", icon: Settings },
+  { href: "/admin", label: "Хяналт", icon: LayoutDashboard },
+  { href: "/admin/products", label: "Бүтээгдэхүүн", icon: Package },
+  { href: "/admin/orders", label: "Захиалга", icon: ShoppingCart },
+  { href: "/admin/customers", label: "Хэрэглэгчид", icon: Users },
+  { href: "/admin/categories", label: "Ангилал", icon: Tag },
+  { href: "/admin/analytics", label: "Аналитик", icon: BarChart3 },
+  { href: "/admin/settings", label: "Тохиргоо", icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -53,9 +55,15 @@ export function AdminSidebar() {
         })}
       </nav>
       <div className="p-3 border-t">
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted">
+        <button
+          onClick={async () => {
+            toast.success("Гарлаа");
+            await signOut({ callbackUrl: "/" });
+          }}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted"
+        >
           <LogOut className="h-4 w-4" />
-          Sign out
+          Гарах
         </button>
       </div>
     </aside>
